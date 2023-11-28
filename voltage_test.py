@@ -1,20 +1,23 @@
-import board
-import machine
-import logging
+import RPi.GPIO as GPIO
+import time
 
-logging.basicConfig(level=logging.INFO)
-from time import sleep
+# Set the GPIO mode to BCM
+GPIO.setmode(GPIO.BCM)
 
+# Define the GPIO pin you want to read
+gpio_pin = 23  # Replace with your GPIO pin number
 
-voltage_GPIO = 23
+# Set up the GPIO pin as an input
+GPIO.setup(gpio_pin, GPIO.IN)
 
-print("Starting Voltage Sensor Test")
+try:
+    while True:
+        # Read the digital value on the GPIO pin
+        input_value = GPIO.input(gpio_pin)
+        print(f"Digital Value: {input_value}")
 
-while True:
-    sleep(1)
-    try:
-        adc = machine.ADC(voltage_GPIO)
-        voltage = adc.read_u16() * 3.3 / 65535
-        print(voltage)
-    except Exception as e:
-        logging.error(f"An error occurred while reading voltage sensor: {e}")
+        time.sleep(1)
+
+except KeyboardInterrupt:
+    # Clean up GPIO on keyboard interrupt
+    GPIO.cleanup()
