@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-#import board
+import board
 import machine
 import logging
 
@@ -11,12 +11,12 @@ from time import sleep
 samples_per_sec = 4  
 run_time = 600  # Requested runtime in seconds
 voltage_GPIO = 23
+amps_GPIO = 22
 ###########################################################
 
 time_array = []   # Time array 
 amps = [] # Amp array
 volts = [] # Voltage array
-air_speed = []  # Air speed array
 
 sample_rate = 1 / samples_per_sec # Sample rate in samples per second
 data_file = 'data.txt'  # File to save and read data
@@ -30,7 +30,6 @@ def main():
         time_array.append(time)
         amps.append(get_amps(time))
         volts.append(get_voltage(time))
-        air_speed.append(get_airspeed(time))
         time += sample_rate
         save_data()
         sleep(sample_rate)
@@ -48,9 +47,6 @@ def get_voltage():
         logging.error(f"An error occurred while reading voltage sensor: {e}")
         return None
 
-def get_airspeed(time):
-    return None
-
 def gps():
     return 1
 
@@ -60,9 +56,8 @@ def save_data():
         latest_time = time_array[-1]
         latest_amp = amps[-1]
         latest_volt = volts[-1]
-        latest_speed = air_speed[-1]
-        file.write(f"{latest_time}\t{latest_amp}\t{latest_volt}\t{latest_speed}\n")
+        file.write(f"{latest_time}\t{latest_amp}\t{latest_volt}\n")
 
 if __name__ == "__main__":
     main()
-    print("Script Stopped Successfully")
+    print("Telemetry Script Stopped Successfully")
