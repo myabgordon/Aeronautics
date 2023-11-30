@@ -5,8 +5,8 @@ from Adafruit_ADS1x15 import ADS1115
 ################ CONFIGS ##################################
 samples_per_sec = 4
 run_time = 600  # Requested runtime in seconds
-amps_channel = 0  # ADC channel for the current sensor on ADS1115
-volts_channel = 1  # ADC channel for the voltage sensor on ADS1115
+amps_channel = 1  # ADC channel for the current sensor on ADS1115
+volts_channel = 0  # ADC channel for the voltage sensor on ADS1115
 ###########################################################
 
 time_array = []   # Time array
